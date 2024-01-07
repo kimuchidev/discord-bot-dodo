@@ -4,3 +4,5 @@ spring:
       project-id: "roh-bot-dodo"
   devtools:
     add-properties: false
+discord:
+  token: ${DISCORD_TOKEN}

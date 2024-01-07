@@ -24,10 +24,12 @@ repositories {
 ext {
     set('springCloudGcpVersion', "5.0.0")
     set('springCloudVersion', "2023.0.0")
+    set('jdaVersion', "5.0.0-beta.19")
 }
 
 dependencies {
     implementation 'com.google.cloud:spring-cloud-gcp-starter'
+    implementation "net.dv8tion:JDA:${jdaVersion}"
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
