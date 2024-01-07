@@ -1,10 +1,10 @@
 package ffxiv.roh.discord.bot.dodo.config;
 
 
-import java.util.List;
+import java.util.Set;
 
 
 public record TextReadProperties(
-        List<String> readTargetChanelIds
+        Set<String> readTargetChanelIds
 ) {
 }

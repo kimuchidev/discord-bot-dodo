@@ -3,10 +3,10 @@ package ffxiv.roh.discord.bot.dodo.domain.listener;
 import ffxiv.roh.discord.bot.dodo.config.DiscordProperties;
 import ffxiv.roh.discord.bot.dodo.domain.command.Command;
 import ffxiv.roh.discord.bot.dodo.domain.command.Help;
+import ffxiv.roh.discord.bot.dodo.domain.exception.NoSuchCommandOptionException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-@Scope("singleton")
 public class CommandListener extends MessageListener {
     private static final String SPLIT_REGEX = " ";
 
@@ -46,6 +45,11 @@ public class CommandListener extends MessageListener {
                     .filter(c -> c.getCommand().equals(command))
                     .findFirst()
                     .ifPresentOrElse(c -> c.execute(event, options), () -> help.execute(event, options));
+        } catch (NoSuchCommandOptionException e) {
+            // コマンド実行失敗した場合、該当コマンドの説明を返す。
+            String[] options = new String[args.length - 1];
+            System.arraycopy(args, 1, options, 0, args.length - 1);
+            help.execute(event, options);
         } catch (Exception e) {
             log.info("Not found command: {}", content);
             help.execute(event);

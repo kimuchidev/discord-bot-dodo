@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -25,9 +25,7 @@ public class JdaConfig {
     @Bean
     @Scope("singleton")
     public TextReadProperties textReadProperties() {
-        return new TextReadProperties(
-                new ArrayList<>()
-        );
+        return new TextReadProperties(new HashSet<>());
     }
 
     @Bean

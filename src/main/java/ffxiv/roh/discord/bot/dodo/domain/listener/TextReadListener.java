@@ -1,10 +1,10 @@
 package ffxiv.roh.discord.bot.dodo.domain.listener;
 
+import ffxiv.roh.discord.bot.dodo.config.DiscordProperties;
 import ffxiv.roh.discord.bot.dodo.config.TextReadProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,12 +13,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-@Scope("singleton")
 public class TextReadListener extends MessageListener {
     private final TextReadProperties textReadProperties;
+    private final DiscordProperties discordProperties;
 
     @Override
     protected void processMessage(MessageReceivedEvent event) {
+        log.debug("TextReadListener.processMessage:{}", event.getMessage().getContentRaw());
     }
 
     @Override
@@ -29,12 +30,12 @@ public class TextReadListener extends MessageListener {
         }
 
         // コマンドメッセージは対象外
-        if (event.getMessage().getContentRaw().startsWith("!")) {
+        if (event.getMessage().getContentRaw().startsWith(discordProperties.getCommandPrefix())) {
             return false;
         }
 
-        // 読み上げ対象チャンネル以外は対象外
-        if (!textReadProperties.readTargetChanelIds().contains(event.getChannel().getId())) {
+        // 読み上げ対象チャンネルの場合 OK
+        if (textReadProperties.readTargetChanelIds().contains(event.getChannel().getId())) {
             return true;
         }
 
