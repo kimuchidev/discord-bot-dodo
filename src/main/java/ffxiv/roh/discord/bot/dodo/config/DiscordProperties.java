@@ -8,4 +8,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("discord")
 public class DiscordProperties {
     private String token;
+    private String commandPrefix;
 }

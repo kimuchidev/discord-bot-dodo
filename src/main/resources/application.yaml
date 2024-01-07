@@ -6,3 +6,4 @@ spring:
     add-properties: false
 discord:
   token: ${DISCORD_TOKEN}
+  commandPrefix: "!dodo"

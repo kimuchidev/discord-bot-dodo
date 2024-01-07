@@ -7,7 +7,9 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,6 +20,14 @@ public class JdaConfig {
     @Bean
     public DiscordProperties discordProperties() {
         return new DiscordProperties();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public TextReadProperties textReadProperties() {
+        return new TextReadProperties(
+                new ArrayList<>()
+        );
     }
 
     @Bean
