@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    gcp:
+      project-id: "roh-bot-dodo"
+  devtools:
+    add-properties: false
