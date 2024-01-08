@@ -1,10 +1,8 @@
 package ffxiv.roh.discord.bot.dodo.config;
 
+import lombok.Data;
 
-import java.util.Set;
-
-
-public record TextReadProperties(
-        Set<String> readTargetChanelIds
-) {
+@Data
+public class TextReadProperties {
+    private String readTargetChanelId = "";
 }

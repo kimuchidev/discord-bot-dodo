@@ -1,7 +1,10 @@
-package ffxiv.roh.discord.bot.dodo.domain.listener;
+package ffxiv.roh.discord.bot.dodo.domain.read;
 
 import ffxiv.roh.discord.bot.dodo.config.DiscordProperties;
 import ffxiv.roh.discord.bot.dodo.config.TextReadProperties;
+import ffxiv.roh.discord.bot.dodo.domain.MessageListener;
+import ffxiv.roh.discord.bot.dodo.domain.entity.User;
+import ffxiv.roh.discord.bot.dodo.domain.entity.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -16,10 +19,18 @@ import org.springframework.stereotype.Service;
 public class TextReadListener extends MessageListener {
     private final TextReadProperties textReadProperties;
     private final DiscordProperties discordProperties;
+    private final TextReadService textReadService;
+    private final UserRepository userRepository;
 
     @Override
     protected void processMessage(MessageReceivedEvent event) {
+        String id = event.getAuthor().getId();
+        String name = event.getMember().getNickname();
+
+        User user = userRepository.findOrCreate(id, name);
+
         log.debug("TextReadListener.processMessage:{}", event.getMessage().getContentRaw());
+        textReadService.read(user, event.getMessage().getContentRaw());
     }
 
     @Override
@@ -35,7 +46,7 @@ public class TextReadListener extends MessageListener {
         }
 
         // 読み上げ対象チャンネルの場合 OK
-        if (textReadProperties.readTargetChanelIds().contains(event.getChannel().getId())) {
+        if (textReadProperties.getReadTargetChanelId().equals(event.getChannel().getId())) {
             return true;
         }
 

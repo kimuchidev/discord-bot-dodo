@@ -12,3 +12,10 @@
 discord 用の下記環境変数を設定する。
 
 - `DISCORD_TOKEN`
+
+### Azure 設定
+
+azure 用の下記環境変数を設定する。
+
+- `AZURE_SPEECH_KEY`
+- `AZURE_SPEECH_REGION`

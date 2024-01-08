@@ -1,4 +1,4 @@
-package ffxiv.roh.discord.bot.dodo.domain.listener;
+package ffxiv.roh.discord.bot.dodo.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.session.ReadyEvent;

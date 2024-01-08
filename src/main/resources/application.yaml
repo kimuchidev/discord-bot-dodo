@@ -2,8 +2,14 @@ spring:
   cloud:
     gcp:
       project-id: "roh-bot-dodo"
+      datastore:
+        namespace: "dodo"
   devtools:
     add-properties: false
 discord:
   token: ${DISCORD_TOKEN}
   commandPrefix: "!dodo"
+azure:
+  speech:
+    key: ${AZURE_SPEECH_KEY}
+    region: ${AZURE_SPEECH_REGION}

@@ -1,8 +1,7 @@
-package ffxiv.roh.discord.bot.dodo.domain.listener;
+package ffxiv.roh.discord.bot.dodo.domain.command;
 
 import ffxiv.roh.discord.bot.dodo.config.DiscordProperties;
-import ffxiv.roh.discord.bot.dodo.domain.command.Command;
-import ffxiv.roh.discord.bot.dodo.domain.command.Help;
+import ffxiv.roh.discord.bot.dodo.domain.MessageListener;
 import ffxiv.roh.discord.bot.dodo.domain.exception.NoSuchCommandOptionException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

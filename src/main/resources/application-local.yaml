@@ -1,3 +1,8 @@
 spring:
+  cloud:
+    gcp:
+      project-id: "roh-bot-dodo"
+      datastore:
+        namespace: "dodo_dev"
   devtools:
     add-properties: true

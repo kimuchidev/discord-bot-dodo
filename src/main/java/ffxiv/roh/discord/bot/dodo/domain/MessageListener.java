@@ -1,4 +1,4 @@
-package ffxiv.roh.discord.bot.dodo.domain.listener;
+package ffxiv.roh.discord.bot.dodo.domain;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
