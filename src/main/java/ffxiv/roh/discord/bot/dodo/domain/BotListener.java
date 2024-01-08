@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  * プロジェクト内で定義したすべての Listener をまとめる親クラス
  */
 @Slf4j
-public abstract class DodoListener extends ListenerAdapter {
+public abstract class BotListener extends ListenerAdapter {
     @Override
     public void onReady(@NotNull ReadyEvent event) {
         log.debug("API is ready!");

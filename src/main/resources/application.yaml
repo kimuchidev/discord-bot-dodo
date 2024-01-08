@@ -8,7 +8,7 @@ spring:
     add-properties: false
 discord:
   token: ${DISCORD_TOKEN}
-  commandPrefix: "!dodo"
+  commandPrefix: "dodo"
 azure:
   speech:
     key: ${AZURE_SPEECH_KEY}

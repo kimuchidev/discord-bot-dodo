@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * テキスト読み上げ処理用リスナー
  */
-public abstract class MessageListener extends DodoListener {
+public abstract class MessageListener extends BotListener {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
