@@ -1,12 +1,12 @@
-package ffxiv.roh.discord.bot.dodo.domain.command;
+package ffxiv.roh.discord.bot.dodo.domain.read;
 
 
 import ffxiv.roh.discord.bot.dodo.config.DiscordProperties;
 import ffxiv.roh.discord.bot.dodo.config.TextReadProperties;
+import ffxiv.roh.discord.bot.dodo.domain.CommandListener;
 import ffxiv.roh.discord.bot.dodo.domain.entity.User;
 import ffxiv.roh.discord.bot.dodo.domain.entity.UserRepository;
 import ffxiv.roh.discord.bot.dodo.domain.entity.Voice;
-import ffxiv.roh.discord.bot.dodo.domain.read.GuildMusicManager;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;

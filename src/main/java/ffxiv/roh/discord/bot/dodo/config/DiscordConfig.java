@@ -4,7 +4,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import ffxiv.roh.discord.bot.dodo.domain.BotListener;
-import ffxiv.roh.discord.bot.dodo.domain.command.CommandListener;
+import ffxiv.roh.discord.bot.dodo.domain.CommandListener;
 import ffxiv.roh.discord.bot.dodo.domain.read.GuildMusicManager;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.JDA;

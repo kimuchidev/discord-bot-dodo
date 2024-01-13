@@ -1,8 +1,7 @@
-package ffxiv.roh.discord.bot.dodo.domain.command;
+package ffxiv.roh.discord.bot.dodo.domain;
 
 
 import ffxiv.roh.discord.bot.dodo.config.DiscordProperties;
-import ffxiv.roh.discord.bot.dodo.domain.BotListener;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
