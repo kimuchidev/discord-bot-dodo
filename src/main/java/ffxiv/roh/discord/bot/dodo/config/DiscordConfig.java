@@ -41,7 +41,7 @@ public class DiscordConfig {
     ) throws InterruptedException {
         var builder = JDABuilder.createDefault(discordProperties.getToken())
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT)
-                .enableCache(CacheFlag.VOICE_STATE)
+                .enableCache(CacheFlag.VOICE_STATE, CacheFlag.EMOJI)
                 .addEventListeners(dodoListeners.toArray());
 
         JDA jda = builder.build();

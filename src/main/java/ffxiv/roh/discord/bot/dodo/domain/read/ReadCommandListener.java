@@ -4,9 +4,11 @@ package ffxiv.roh.discord.bot.dodo.domain.read;
 import ffxiv.roh.discord.bot.dodo.config.DiscordProperties;
 import ffxiv.roh.discord.bot.dodo.config.TextReadProperties;
 import ffxiv.roh.discord.bot.dodo.domain.CommandListener;
+import ffxiv.roh.discord.bot.dodo.domain.CommandUtils;
 import ffxiv.roh.discord.bot.dodo.domain.entity.User;
 import ffxiv.roh.discord.bot.dodo.domain.entity.UserRepository;
 import ffxiv.roh.discord.bot.dodo.domain.entity.Voice;
+import ffxiv.roh.discord.bot.dodo.domain.exception.StopProcessException;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
@@ -19,7 +21,6 @@ import net.dv8tion.jda.api.managers.AudioManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -38,7 +39,7 @@ public class ReadCommandListener extends CommandListener {
     }
 
     @Override
-    public void execute(SlashCommandInteractionEvent event) {
+    public void execute(SlashCommandInteractionEvent event) throws StopProcessException {
         String subcommand = event.getSubcommandName();
         switch (subcommand) {
             case "s" -> start(event);
@@ -49,22 +50,12 @@ public class ReadCommandListener extends CommandListener {
         }
     }
 
-    void start(SlashCommandInteractionEvent event) {
-        try {
-            AudioChannel audioChannel = Objects.requireNonNull(event.getMember().getVoiceState()).getChannel();
-            if (audioChannel != null) {
-                connectTo(audioChannel);
-            } else {
-                event.reply("Voice チャンネルに参加した状態で実行してください。").setEphemeral(true).queue();
-                return;
-            }
-        } catch (NullPointerException e) {
-            event.reply("""
-                    読み上げ起動に失敗しました。
-                    ```
-                    %s
-                    ```
-                    """.formatted(e)).setEphemeral(true).queue();
+    void start(SlashCommandInteractionEvent event) throws StopProcessException {
+        var audioChannel = CommandUtils.getAudioChannel(event);
+        if (audioChannel.isPresent()) {
+            connectTo(audioChannel.get());
+        } else {
+            event.reply("Voice チャンネルに参加した状態で実行してください。").setEphemeral(true).queue();
             return;
         }
         textReadProperties.setReadTargetChanelId(event.getChannel().getId());
@@ -78,11 +69,11 @@ public class ReadCommandListener extends CommandListener {
         audioManager = null;
     }
 
-    void changeVoice(SlashCommandInteractionEvent event) {
-        Voice voiceChangeTobe = Voice.valueOf(Objects.requireNonNull(event.getOption("voice")).getAsString()); // 必須のため null チェック不要
+    void changeVoice(SlashCommandInteractionEvent event) throws StopProcessException {
+        Voice voiceChangeTobe = Voice.valueOf(CommandUtils.getOptionString(event, "voice"));
 
-        String userId = event.getMember().getId();
-        String userName = event.getMember().getNickname();
+        String userId = CommandUtils.getUserId(event);
+        String userName = CommandUtils.getNickname(event);
         User user = userRepository.findOrCreate(userId, userName);
         user.setVoice(voiceChangeTobe);
         userRepository.save(user);
@@ -90,11 +81,11 @@ public class ReadCommandListener extends CommandListener {
         event.reply("以降 %s の声で読み上げます。".formatted(voiceChangeTobe.getVoiceNameJp())).setEphemeral(true).queue();
     }
 
-    void changeName(SlashCommandInteractionEvent event) {
-        String spellChangeTobe = Objects.requireNonNull(event.getOption("name")).getAsString(); // 必須のため null チェック不要
+    void changeName(SlashCommandInteractionEvent event) throws StopProcessException {
+        String spellChangeTobe = CommandUtils.getOptionString(event, "name");
 
-        String userId = event.getMember().getId();
-        String userName = event.getMember().getNickname();
+        String userId = CommandUtils.getUserId(event);
+        String userName = CommandUtils.getNickname(event);
         User user = userRepository.findOrCreate(userId, userName);
         user.setSpell(spellChangeTobe);
         userRepository.save(user);

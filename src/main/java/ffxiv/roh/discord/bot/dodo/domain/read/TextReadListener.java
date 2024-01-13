@@ -2,12 +2,13 @@ package ffxiv.roh.discord.bot.dodo.domain.read;
 
 import ffxiv.roh.discord.bot.dodo.config.DiscordProperties;
 import ffxiv.roh.discord.bot.dodo.config.TextReadProperties;
-import ffxiv.roh.discord.bot.dodo.domain.MessageListener;
+import ffxiv.roh.discord.bot.dodo.domain.BotListener;
 import ffxiv.roh.discord.bot.dodo.domain.entity.User;
 import ffxiv.roh.discord.bot.dodo.domain.entity.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,14 +17,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class TextReadListener extends MessageListener {
+public class TextReadListener extends BotListener {
     private final TextReadProperties textReadProperties;
     private final DiscordProperties discordProperties;
     private final TextReadService textReadService;
     private final UserRepository userRepository;
 
     @Override
-    protected void processMessage(MessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if (!isTarget(event)) {
+            return;
+        }
+
         String id = event.getAuthor().getId();
         String name = event.getMember().getNickname();
 
@@ -33,15 +38,9 @@ public class TextReadListener extends MessageListener {
         textReadService.read(user, event.getMessage().getContentRaw());
     }
 
-    @Override
     protected boolean isTarget(MessageReceivedEvent event) {
         // bot 通知は対象外
         if (event.getAuthor().isBot()) {
-            return false;
-        }
-
-        // コマンドメッセージは対象外
-        if (event.getMessage().getContentRaw().startsWith(discordProperties.getCommandPrefix())) {
             return false;
         }
 
