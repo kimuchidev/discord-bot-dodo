@@ -30,7 +30,7 @@ public class TextReadListener extends BotListener {
         }
 
         String id = event.getAuthor().getId();
-        String name = event.getMember().getNickname();
+        String name = event.getAuthor().getEffectiveName();
 
         User user = userRepository.findOrCreate(id, name);
 

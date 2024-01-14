@@ -73,7 +73,7 @@ public class ReadCommandListener extends CommandListener {
         Voice voiceChangeTobe = Voice.valueOf(CommandUtils.getOptionString(event, "voice"));
 
         String userId = CommandUtils.getUserId(event);
-        String userName = CommandUtils.getNickname(event);
+        String userName = CommandUtils.getUsername(event);
         User user = userRepository.findOrCreate(userId, userName);
         user.setVoice(voiceChangeTobe);
         userRepository.save(user);
@@ -85,7 +85,7 @@ public class ReadCommandListener extends CommandListener {
         String spellChangeTobe = CommandUtils.getOptionString(event, "name");
 
         String userId = CommandUtils.getUserId(event);
-        String userName = CommandUtils.getNickname(event);
+        String userName = CommandUtils.getUsername(event);
         User user = userRepository.findOrCreate(userId, userName);
         user.setSpell(spellChangeTobe);
         userRepository.save(user);

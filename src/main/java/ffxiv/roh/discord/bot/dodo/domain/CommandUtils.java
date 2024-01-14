@@ -98,22 +98,14 @@ public class CommandUtils {
         return member.getId();
     }
 
-    public static String getNickname(SlashCommandInteractionEvent event) throws StopProcessException {
-        var member = event.getMember();
-        if (member == null) {
-            event.reply("メンバー情報を取得できませんでした。管理者に連絡してください。").setEphemeral(true).queue();
-            throw new StopProcessException();
-        }
-        return member.getNickname();
+    public static String getUsername(SlashCommandInteractionEvent event) {
+        var user = event.getUser();
+        return user.getEffectiveName();
     }
 
-    public static String getNickname(ModalInteractionEvent event) throws StopProcessException {
-        var member = event.getMember();
-        if (member == null) {
-            event.reply("メンバー情報を取得できませんでした。管理者に連絡してください。").setEphemeral(true).queue();
-            throw new StopProcessException();
-        }
-        return member.getNickname();
+    public static String getUsername(ModalInteractionEvent event) throws StopProcessException {
+        var user = event.getUser();
+        return user.getEffectiveName();
     }
 
 

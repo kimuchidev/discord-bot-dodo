@@ -118,7 +118,7 @@ public class PartyCommandListener extends CommandListener {
         String comment = CommandUtils.getInputString(event, "comment");
 
         String requestId = event.getId();
-        String nickname = CommandUtils.getNickname(event);
+        String nickname = CommandUtils.getUsername(event);
         Party party = Party.newInstance(requestId, content, nickname, datetime, roles, comment);
         partyRepository.save(party);
 
