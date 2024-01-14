@@ -48,7 +48,7 @@ public class TextReadService {
         speechConfig.setSpeechSynthesisVoiceName(voice);
         speechConfig.setSpeechSynthesisOutputFormat(format);
 
-        String fileName = "cache/Audio_%s.mp3".formatted(Clock.systemUTC().millis());
+        String fileName = "./cache/Audio_%s.mp3".formatted(Clock.systemUTC().millis());
         AudioConfig fileOutputConfig = AudioConfig.fromWavFileOutput(fileName);
 
         SpeechSynthesizer synthesizer = new SpeechSynthesizer(speechConfig, fileOutputConfig);
