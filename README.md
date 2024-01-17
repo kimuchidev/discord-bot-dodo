@@ -25,7 +25,7 @@ azure 用の下記環境変数を設定する。
 ## deploy
 
 ```
-gcloud compute scp C:\Users\kim_m\IdeaProjects\discord-bot-dodo\build\libs\discord-bot-dodo-1.0.0.jar roh-dodo:discord-bot-dodo.jar
+gcloud compute scp C:\Users\kim_m\IdeaProjects\discord-bot-dodo\build\libs\discord-bot-dodo-1.1.0.jar roh-dodo:discord-bot-dodo.jar
 ```
 
 ```
