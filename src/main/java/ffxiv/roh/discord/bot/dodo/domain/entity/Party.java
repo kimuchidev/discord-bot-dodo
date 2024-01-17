@@ -170,9 +170,14 @@ public class Party {
                     if (nextRolePair.isPresent()) {
                         nextRolePair.get().setEntryInfo(tempRecruitedRolePair.getEntryInfo());
                         tempRecruitedRolePair.setEntryInfo(entryInfo);
+                        recruited = true;
                         break;
                     }
                 }
+            }
+
+            if (recruited) {
+                continue;
             }
             notRecruitedEntries.add(entryInfo);
         }
