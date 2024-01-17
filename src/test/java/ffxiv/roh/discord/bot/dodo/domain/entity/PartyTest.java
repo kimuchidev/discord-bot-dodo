@@ -10,7 +10,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static ffxiv.roh.discord.bot.dodo.domain.party.Role.*;
@@ -19,13 +21,17 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 class PartyTest {
     @ParameterizedTest
     @MethodSource("methodSource")
-    void doAutoCompositionTest(Roles recruitRoles, List<EntryInfo> entries, List<RolePair> expectedRolePairs) {
+    void doAutoCompositionTest(Roles recruitRoles, List<EntryInfo> entries, List<RolePair> expectedRolePairs, List<String> expectedUnRecruitedUserNames) {
         var party = Party.newInstance("", "", "", LocalDateTime.now(), recruitRoles, "");
         party.setEntryInfoList(entries);
         party.doAutoComposition();
 
         Assertions.assertThat(party.getRecruitedRolePairs())
                 .isEqualTo(expectedRolePairs);
+
+        Assertions.assertThat(party.getNotRecruitedEntries())
+                .extracting(EntryInfo::getName)
+                .isEqualTo(expectedUnRecruitedUserNames);
     }
 
     // パラメータのファクトリメソッド
@@ -45,53 +51,58 @@ class PartyTest {
 
         return Stream.of(
                 // 単体マッピング
-                arguments(Roles.parse("T1"), List.of(t), List.of(new RolePair(T, t))),
-                arguments(Roles.parse("MT1"), List.of(mt), List.of(new RolePair(MT, mt))),
-                arguments(Roles.parse("ST1"), List.of(st), List.of(new RolePair(ST, st))),
-                arguments(Roles.parse("H1"), List.of(h), List.of(new RolePair(H, h))),
-                arguments(Roles.parse("PH1"), List.of(ph), List.of(new RolePair(PH, ph))),
-                arguments(Roles.parse("BH1"), List.of(bh), List.of(new RolePair(BH, bh))),
-                arguments(Roles.parse("D1"), List.of(d), List.of(new RolePair(D, d))),
-                arguments(Roles.parse("MD1"), List.of(md), List.of(new RolePair(MD, md))),
-                arguments(Roles.parse("RD1"), List.of(rd), List.of(new RolePair(RD, rd))),
-                arguments(Roles.parse("CD1"), List.of(cd), List.of(new RolePair(CD, cd))),
-                arguments(Roles.parse("F1"), List.of(f), List.of(new RolePair(F, f))),
+
+                arguments(Roles.parse("T1"), List.of(t), List.of(new RolePair(T, t)), List.of()), //1
+                arguments(Roles.parse("MT1"), List.of(mt), List.of(new RolePair(MT, mt)), List.of()),//2
+                arguments(Roles.parse("ST1"), List.of(st), List.of(new RolePair(ST, st)), List.of()), //3
+                arguments(Roles.parse("H1"), List.of(h), List.of(new RolePair(H, h)), List.of()),  //4
+                arguments(Roles.parse("PH1"), List.of(ph), List.of(new RolePair(PH, ph)), List.of()),//5
+                arguments(Roles.parse("BH1"), List.of(bh), List.of(new RolePair(BH, bh)), List.of()),//6
+                arguments(Roles.parse("D1"), List.of(d), List.of(new RolePair(D, d)), List.of()), //7
+                arguments(Roles.parse("MD1"), List.of(md), List.of(new RolePair(MD, md)), List.of()),//8
+                arguments(Roles.parse("RD1"), List.of(rd), List.of(new RolePair(RD, rd)), List.of()),//9
+                arguments(Roles.parse("CD1"), List.of(cd), List.of(new RolePair(CD, cd)), List.of()),//10
+                arguments(Roles.parse("F1"), List.of(f), List.of(new RolePair(F, f)), List.of()),//11
 
                 // 優先度が高いロールにアサインされる
+                //11
                 arguments(Roles.parse("T1,H1,D1"), List.of(hd), List.of(
                         new RolePair(T, null),
                         new RolePair(H, hd),
                         new RolePair(D, null)
-                )),
+                ), List.of()),
+                //12
                 arguments(Roles.parse("T1,H1,D1"), List.of(hd, h), List.of(
                         new RolePair(T, null),
                         new RolePair(H, h),
                         new RolePair(D, hd)
-                )),
+                ), List.of()),
 
                 // 応募が溢れた場合、応募順でアサイン
+                //13
                 arguments(Roles.parse("T1,H1,D1"), List.of(hd, h, d), List.of(
                         new RolePair(T, null),
                         new RolePair(H, h),
                         new RolePair(D, hd)
-                )),
+                ), List.of("d")),
+                //14
                 arguments(Roles.parse("T1,H1,D1"), List.of(hd, d, h), List.of(
                         new RolePair(T, null),
                         new RolePair(H, hd),
                         new RolePair(D, d)
-                )),
+                ), List.of("h")),
+                //15
                 arguments(Roles.parse("T1,H1,D1,F1"), List.of(hd, d, h), List.of(
                         new RolePair(T, null),
                         new RolePair(H, hd),
                         new RolePair(D, d),
                         new RolePair(F, h)
-                )),
-
-                arguments(Roles.parse("T1"), List.of(t), List.of(new RolePair(T, t)))
+                ), List.of())
         );
     }
 
     private static EntryInfo dummyEntryInfo(Role... roles) {
-        return new EntryInfo("id", "name", List.of(roles));
+        String roleName = Arrays.stream(roles).map(Enum::name).map(String::toLowerCase).collect(Collectors.joining(","));
+        return new EntryInfo("id", roleName, List.of(roles));
     }
 }
