@@ -25,11 +25,11 @@ azure 用の下記環境変数を設定する。
 ## deploy
 
 ```
-gcloud compute scp C:\Users\kim_m\IdeaProjects\discord-bot-dodo\build\libs\discord-bot-dodo-0.0.1-SNAPSHOT.jar roh-dodo:discord-bot-dodo-0.0.1-SNAPSHOT.jar
+gcloud compute scp C:\Users\kim_m\IdeaProjects\discord-bot-dodo\build\libs\discord-bot-dodo-1.0.0.jar roh-dodo:discord-bot-dodo.jar
 ```
 
 ```
-sudo mv /home/kim_m/discord-bot-dodo-0.0.1-SNAPSHOT.jar /home/kimuchidev/dodo/bot-java/
+sudo mv /home/kim_m/discord-bot-dodo.jar /home/kimuchidev/dodo/bot-java/
 sudo systemctl restart dodo-bot
 sudo systemctl status dodo-bot
 ```
