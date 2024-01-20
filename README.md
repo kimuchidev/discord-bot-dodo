@@ -35,7 +35,8 @@ azure 用の下記環境変数を設定する。
 ### jar upload
 
 ```
-gcloud compute scp C:\Users\kim_m\IdeaProjects\discord-bot-dodo\build\libs\discord-bot-dodo-1.2.0.jar roh-dodo:discord-bot-dodo.jar
+gcloud compute scp C:\Users\kim_m\IdeaProjects\discord-bot-dodo\build\libs\discord-bot-dodo-1.3.0.jar roh-dodo:discord-bot-dodo.jar
+gcloud compute ssh --zone "us-west1-b" "roh-dodo" --project "roh-bot-dodo"
 ```
 
 ### setting env
