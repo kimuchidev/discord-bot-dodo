@@ -13,3 +13,6 @@ azure:
   speech:
     key: ${AZURE_SPEECH_KEY}
     region: ${AZURE_SPEECH_REGION}
+voicevox:
+  url: ${VOICEVOX_API_URL}
+  api-keys: ${VOICEVOX_API_KEY}
