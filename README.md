@@ -33,3 +33,7 @@ sudo mv /home/kim_m/discord-bot-dodo.jar /home/kimuchidev/dodo/bot-java/
 sudo systemctl restart dodo-bot
 sudo systemctl status dodo-bot
 ```
+
+## そのた
+
+ずんだもんの読み上げ機能は[voicevox - WEB版API](https://www.voicevox.su-shiki.com/) を利用している。

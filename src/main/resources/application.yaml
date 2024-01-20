@@ -15,4 +15,4 @@ azure:
     region: ${AZURE_SPEECH_REGION}
 voicevox:
   url: ${VOICEVOX_API_URL}
-  api-keys: ${VOICEVOX_API_KEY}
+  api-keys: ${VOICEVOX_API_KEYS}

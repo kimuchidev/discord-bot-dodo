@@ -1,9 +1,10 @@
-package ffxiv.roh.discord.bot.dodo.domain.read;
+package ffxiv.roh.discord.bot.dodo.domain.read.azure;
 
 import com.microsoft.cognitiveservices.speech.*;
 import com.microsoft.cognitiveservices.speech.audio.AudioConfig;
 import ffxiv.roh.discord.bot.dodo.config.SpeechProperties;
 import ffxiv.roh.discord.bot.dodo.domain.entity.Voice;
+import ffxiv.roh.discord.bot.dodo.domain.read.GuildMusicManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -5,6 +5,7 @@ import ffxiv.roh.discord.bot.dodo.config.TextReadProperties;
 import ffxiv.roh.discord.bot.dodo.domain.BotListener;
 import ffxiv.roh.discord.bot.dodo.domain.entity.User;
 import ffxiv.roh.discord.bot.dodo.domain.entity.UserRepository;
+import ffxiv.roh.discord.bot.dodo.domain.exception.NoMoreApiKeyException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -33,9 +34,16 @@ public class TextReadListener extends BotListener {
         String name = event.getAuthor().getEffectiveName();
 
         User user = userRepository.findOrCreate(id, name);
-
-        log.debug("TextReadListener.processMessage:{}", event.getMessage().getContentRaw());
-        textReadService.read(user, event.getMessage().getContentRaw());
+        String text = event.getMessage().getContentRaw();
+        log.debug("TextReadListener.processMessage:{}", text);
+        try {
+            textReadService.read(user, text);
+        } catch (NoMoreApiKeyException e) {
+            event.getMessage().reply("今日は疲れ果てて「ずんだもん」の声が出せません…。").queue();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            event.getMessage().reply("[%s]の読み上げが失敗しました。もう一度やり直してみてください。".formatted(text)).queue();
+        }
     }
 
     protected boolean isTarget(MessageReceivedEvent event) {
