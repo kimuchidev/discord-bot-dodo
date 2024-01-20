@@ -118,7 +118,7 @@ public class ReadCommandListener extends CommandListener {
         String voiceCodes = Arrays.stream(Voice.values()).map(Voice::name).collect(Collectors.joining("|"));
 
         OptionData voiceOptionData = new OptionData(OptionType.STRING, "voice", "読み上げ時の声", true);
-        Arrays.stream(Voice.values()).forEach(voice -> voiceOptionData.addChoice(voice.name(), voice.name()));
+        Arrays.stream(Voice.values()).forEach(voice -> voiceOptionData.addChoice(voice.description(), voice.name()));
 
         return new SubcommandGroupData(getCommandCode(), getDescription())
                 .addSubcommands(

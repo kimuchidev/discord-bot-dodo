@@ -23,6 +23,13 @@ public enum Voice {
     private final String voiceName;
     private final String voiceNameJp;
 
+    /**
+     * 選択肢表示用説明文
+     */
+    public String description() {
+        return "%s (%s)".formatted(name(), getVoiceNameJp());
+    }
+
     public enum Type {
         AZURE,
 
