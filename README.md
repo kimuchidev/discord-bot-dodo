@@ -32,9 +32,19 @@ azure 用の下記環境変数を設定する。
 
 ## deploy
 
+### jar upload
+
 ```
-gcloud compute scp C:\Users\kim_m\IdeaProjects\discord-bot-dodo\build\libs\discord-bot-dodo-1.1.0.jar roh-dodo:discord-bot-dodo.jar
+gcloud compute scp C:\Users\kim_m\IdeaProjects\discord-bot-dodo\build\libs\discord-bot-dodo-1.2.0.jar roh-dodo:discord-bot-dodo.jar
 ```
+
+### setting env
+
+```
+sudo vi /home/kimuchidev/dodo/bot-java/env.conf
+```
+
+### jar deploy
 
 ```
 sudo mv /home/kim_m/discord-bot-dodo.jar /home/kimuchidev/dodo/bot-java/
