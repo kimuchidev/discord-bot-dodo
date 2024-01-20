@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import static java.lang.Thread.sleep;
+
 @Slf4j
 @Service
 public class ReadCommandListener extends CommandListener {
@@ -96,6 +98,11 @@ public class ReadCommandListener extends CommandListener {
     private void connectTo(AudioChannel channel) {
         if (audioManager != null) {
             audioManager.closeAudioConnection();
+            try {
+                sleep(2000);
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+            }
         }
         Guild guild = channel.getGuild();
         audioManager = guild.getAudioManager();
