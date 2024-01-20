@@ -78,7 +78,7 @@ public class ReadCommandListener extends CommandListener {
         user.setVoice(voiceChangeTobe);
         userRepository.save(user);
 
-        event.reply("以降 %s の声で読み上げます。".formatted(voiceChangeTobe.getVoiceNameJp())).setEphemeral(true).queue();
+        event.reply("以降 %s の声で読み上げます。".formatted(voiceChangeTobe.getNameJp())).setEphemeral(true).queue();
     }
 
     void changeName(SlashCommandInteractionEvent event) throws StopProcessException {

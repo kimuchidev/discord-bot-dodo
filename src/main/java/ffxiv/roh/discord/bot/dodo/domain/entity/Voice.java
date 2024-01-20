@@ -20,14 +20,14 @@ public enum Voice {
     ZUNDAMON_NAMIDAME(Type.VOICE_VOX, "76", "ずんだもん-なみだめ");
 
     private final Type type;
-    private final String voiceName;
-    private final String voiceNameJp;
+    private final String code;
+    private final String nameJp;
 
     /**
      * 選択肢表示用説明文
      */
     public String description() {
-        return "%s (%s)".formatted(name(), getVoiceNameJp());
+        return "%s (%s)".formatted(name(), getNameJp());
     }
 
     public enum Type {
