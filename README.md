@@ -20,6 +20,14 @@ azure 用の下記環境変数を設定する。
 - `AZURE_SPEECH_KEY`
 - `AZURE_SPEECH_REGION`
 
+### voicevox 設定
+
+ずんだもんの読み上げ機能は[voicevox - WEB版API](https://www.voicevox.su-shiki.com/) を利用している。
+よって、API 用の下記環境変数を設定する。
+
+- `VOICEVOX_URL`
+- `VOICEVOX_API_KEYS`
+
 ## build
 
 ## deploy
@@ -33,7 +41,3 @@ sudo mv /home/kim_m/discord-bot-dodo.jar /home/kimuchidev/dodo/bot-java/
 sudo systemctl restart dodo-bot
 sudo systemctl status dodo-bot
 ```
-
-## そのた
-
-ずんだもんの読み上げ機能は[voicevox - WEB版API](https://www.voicevox.su-shiki.com/) を利用している。
