@@ -4,6 +4,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import ffxiv.roh.discord.bot.dodo.domain.BotListener;
+import ffxiv.roh.discord.bot.dodo.domain.MessageCommandListener;
 import ffxiv.roh.discord.bot.dodo.domain.SlashCommandListener;
 import ffxiv.roh.discord.bot.dodo.domain.read.GuildMusicManager;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,8 @@ public class DiscordConfig {
     @Bean
     public JDA jda(DiscordProperties discordProperties,
                    List<BotListener> dodoListeners,
-                   List<SlashCommandListener> slashCommandListeners
+                   List<SlashCommandListener> slashCommandListeners,
+                   List<MessageCommandListener> messageCommandListeners
     ) throws InterruptedException {
         var builder = JDABuilder.createDefault(discordProperties.getToken())
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT)
@@ -46,11 +48,14 @@ public class DiscordConfig {
 
         JDA jda = builder.build();
         jda.awaitReady();
-        jda.updateCommands().addCommands(
-                Commands.slash(discordProperties.getCommandPrefix(), "ドードーへの指示").addSubcommandGroups(
-                        slashCommandListeners.stream().map(SlashCommandListener::getCommandData).toList()
+        jda.updateCommands()
+                .addCommands(
+                        Commands.slash(discordProperties.getCommandPrefix(), "ドードーへの指示").addSubcommandGroups(
+                                slashCommandListeners.stream().map(SlashCommandListener::getCommandData).toList()
+                        )
                 )
-        ).queue();
+                .addCommands(messageCommandListeners.stream().map(MessageCommandListener::getCommandData).toList())
+                .queue();
         return jda;
     }
 
