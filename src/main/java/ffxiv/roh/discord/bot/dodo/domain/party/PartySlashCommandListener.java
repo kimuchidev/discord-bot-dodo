@@ -2,8 +2,8 @@ package ffxiv.roh.discord.bot.dodo.domain.party;
 
 
 import ffxiv.roh.discord.bot.dodo.config.DiscordProperties;
-import ffxiv.roh.discord.bot.dodo.domain.CommandListener;
 import ffxiv.roh.discord.bot.dodo.domain.CommandUtils;
+import ffxiv.roh.discord.bot.dodo.domain.SlashCommandListener;
 import ffxiv.roh.discord.bot.dodo.domain.entity.*;
 import ffxiv.roh.discord.bot.dodo.domain.exception.CantParseRoleException;
 import ffxiv.roh.discord.bot.dodo.domain.exception.StopProcessException;
@@ -35,11 +35,11 @@ import static ffxiv.roh.discord.bot.dodo.domain.entity.ConfigKey.DEFAULT_PARTY_C
 
 @Slf4j
 @Service
-public class PartyCommandListener extends CommandListener {
+public class PartySlashCommandListener extends SlashCommandListener {
     private final PartyRepository partyRepository;
     private final ConfigRepository configRepository;
 
-    public PartyCommandListener(DiscordProperties discordProperties, PartyRepository partyRepository, ConfigRepository configRepository) {
+    public PartySlashCommandListener(DiscordProperties discordProperties, PartyRepository partyRepository, ConfigRepository configRepository) {
         super(discordProperties);
         this.partyRepository = partyRepository;
         this.configRepository = configRepository;

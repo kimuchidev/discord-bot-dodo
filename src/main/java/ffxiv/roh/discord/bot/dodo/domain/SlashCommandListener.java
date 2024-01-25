@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 
 @Slf4j
 @RequiredArgsConstructor
-public abstract class CommandListener extends BotListener {
+public abstract class SlashCommandListener extends BotListener {
     protected final DiscordProperties discordProperties;
 
     @Override

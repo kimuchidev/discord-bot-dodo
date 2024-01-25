@@ -3,8 +3,8 @@ package ffxiv.roh.discord.bot.dodo.domain.read;
 
 import ffxiv.roh.discord.bot.dodo.config.DiscordProperties;
 import ffxiv.roh.discord.bot.dodo.config.TextReadProperties;
-import ffxiv.roh.discord.bot.dodo.domain.CommandListener;
 import ffxiv.roh.discord.bot.dodo.domain.CommandUtils;
+import ffxiv.roh.discord.bot.dodo.domain.SlashCommandListener;
 import ffxiv.roh.discord.bot.dodo.domain.entity.User;
 import ffxiv.roh.discord.bot.dodo.domain.entity.UserRepository;
 import ffxiv.roh.discord.bot.dodo.domain.entity.Voice;
@@ -27,13 +27,13 @@ import static java.lang.Thread.sleep;
 
 @Slf4j
 @Service
-public class ReadCommandListener extends CommandListener {
+public class ReadSlashCommandListener extends SlashCommandListener {
     private final TextReadProperties textReadProperties;
     private final GuildMusicManager guildMusicManager;
     private final UserRepository userRepository;
     private AudioManager audioManager;
 
-    public ReadCommandListener(DiscordProperties discordProperties, TextReadProperties textReadProperties, GuildMusicManager guildMusicManager, UserRepository userRepository) {
+    public ReadSlashCommandListener(DiscordProperties discordProperties, TextReadProperties textReadProperties, GuildMusicManager guildMusicManager, UserRepository userRepository) {
         super(discordProperties);
         this.textReadProperties = textReadProperties;
         this.guildMusicManager = guildMusicManager;
