@@ -28,7 +28,7 @@ public class PartyChannelCleaner {
     private final ConfigRepository configRepository;
     private final PartyRepository partyRepository;
 
-    @Scheduled(fixedDelay = 3600000)
+    @Scheduled(fixedDelay = 600000)
     public void cleanPartyChannelMessage() {
         Config partyChannelNameConfig = configRepository.findById(ConfigKey.partyChannelName.name())
                 .orElseGet(() -> new Config(ConfigKey.partyChannelName.name(), DEFAULT_PARTY_CHANNEL_NAME));
@@ -68,6 +68,7 @@ public class PartyChannelCleaner {
             return false;
         }
 
+        // メッセージ自体１日経ってなかったら削除対象外
         ZonedDateTime messageDeleteTime = message.getTimeCreated().atZoneSameInstant(ZoneId.systemDefault()).plusDays(delayDay);
         if (messageDeleteTime.isAfter(ZonedDateTime.now())) {
             return false;
@@ -78,6 +79,7 @@ public class PartyChannelCleaner {
             return true;
         }
 
+        // party 募集の内容から削除予定時間経過したかを判断する
         var optionalPartyRequestId = embeds.getFirst().getFields().stream().filter(
                 field -> PARTY_ID_FIELD_NAME.equals(field.getName())
         ).findFirst();
@@ -92,11 +94,8 @@ public class PartyChannelCleaner {
         }
         var party = optionalParty.get();
 
-        if (party.getDeleteDatetime().isAfter(LocalDateTime.now())) {
-            return true;
-        }
-
-        return false;
+        // 削除時間が現時間より過去の場合、削除
+        return party.getDeleteDatetime().isBefore(LocalDateTime.now());
     }
 
     boolean isDeletableUserMessage(Message message, int delayDay) {
