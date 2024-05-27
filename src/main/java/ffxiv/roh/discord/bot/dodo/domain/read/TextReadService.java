@@ -29,10 +29,19 @@ public class TextReadService {
     }
 
     private String transformText(User user, String text) {
+        String result = String.valueOf(text);
+        // URL を消す
+        result = result.replaceAll("https://game8.jp/.*", "[ゲームエイトurl]");
+        result = result.replaceAll("https://www.youtube.com/.*", "[ユーチューブurl]");
+        result = result.replaceAll("http://.*", "[url]");
+        result = result.replaceAll("https://.*", "[url]");
+        // discord の絵文字を消す
+        result = result.replaceAll("<:.*:[0-9]*>", "[絵文字]");
+
         Config config = configRepository.findById(ConfigKey.readName.name()).orElseGet(() -> new Config(ConfigKey.readName.name(), "true"));
         if (config.getValue().equals("true")) {
-            return "%s：%s".formatted(user.getSpell(), text);
+            return "%s：%s".formatted(user.getSpell(), result);
         }
-        return text;
+        return result;
     }
 }
