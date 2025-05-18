@@ -23,19 +23,19 @@ public class TextReadService {
     public void read(User user, String text) throws Exception {
         if (text.equals("__DO__DEBUG__VOICE__VOX")) {
             for (Voice v : Arrays.stream(Voice.values()).filter(v -> v.getType() == Voice.Type.VOICE_VOX).toList()) {
-                read(user, v, "「%s」。こんにちは。".formatted(v.getNameJp()));
+                read(v, "「%s」。こんにちは。".formatted(v.getNameJp()));
                 sleep(5000);
             }
         } else {
-            read(user, user.getVoice(), transformText(user, text));
+            read(user.getVoice(), transformText(user, text));
         }
         deleteOldCache();
     }
 
-    private void read(User user, Voice voice, String text) throws Exception {
+    private void read(Voice voice, String text) throws Exception {
         switch (voice.getType()) {
-            case AZURE -> azureTextReadService.read(voice, transformText(user, text));
-            case VOICE_VOX -> voiceVoxTextReadService.read(voice, transformText(user, text));
+            case AZURE -> azureTextReadService.read(voice, text);
+            case VOICE_VOX -> voiceVoxTextReadService.read(voice, text);
         }
     }
 
