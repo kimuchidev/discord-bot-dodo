@@ -61,7 +61,11 @@ public class ReadSlashCommandListener extends SlashCommandListener {
             return;
         }
         textReadProperties.setReadTargetChanelId(event.getChannel().getId());
-        event.reply("<#%s> のメッセージ読み上げを開始します。".formatted(event.getChannel().getId())).queue();
+        String helpText = "\uD83D\uDD0A 読み上げコマンド一覧：\n" +
+                "- `/dodo read b` : 読み上げを終了\n" +
+                "- `/dodo read v` (voice) : コマンドを実行したユーザーの読み上げ時の声を変更\n" +
+                "- `/dodo read n` (name) : コマンドを実行したユーザーの読み上げ時の名前を変更";
+        event.reply("<#%s> のメッセージ読み上げを開始します。\n\n%s".formatted(event.getChannel().getId(), helpText)).queue();
     }
 
     void bye(SlashCommandInteractionEvent event) {
