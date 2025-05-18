@@ -14,8 +14,12 @@ public enum Voice {
     girl3(Type.AZURE, "ja-JP-MayuNeural", "女性-Mayu"),
     girl4(Type.AZURE, "ja-JP-ShioriNeural", "女性-Shiori"),
     ZUNDAMON_AMAAMA(Type.VOICE_VOX, "1", "ずんだもん-あまあま"),
+    ZUNDAMON_NORMAL(Type.VOICE_VOX, "3", "ずんだもん-ノーマル"),
+    ZUNDAMON_TSUNTSUN(Type.VOICE_VOX, "7", "ずんだもん-ツンツン"),
     ZUNDAMON_SASAYAKI(Type.VOICE_VOX, "22", "ずんだもん-ささやき"),
-    ZUNDAMON_HISOHISO(Type.VOICE_VOX, "38", "ずんだもん-ひそひそ");
+    ZUNDAMON_HISOHISO(Type.VOICE_VOX, "38", "ずんだもん-ひそひそ"),
+    ZUNDAMON_HEROHERO(Type.VOICE_VOX, "75", "ずんだもん-ヘロヘロ"),
+    ZUNDAMON_TEAR(Type.VOICE_VOX, "76", "ずんだもん-なみだめ");
 
     private final Type type;
     private final String code;
