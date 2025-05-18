@@ -1,16 +1,16 @@
 package ffxiv.roh.discord.bot.dodo.domain.read;
 
-import ffxiv.roh.discord.bot.dodo.domain.entity.Config;
-import ffxiv.roh.discord.bot.dodo.domain.entity.ConfigKey;
-import ffxiv.roh.discord.bot.dodo.domain.entity.ConfigRepository;
-import ffxiv.roh.discord.bot.dodo.domain.entity.User;
+import ffxiv.roh.discord.bot.dodo.domain.entity.*;
 import ffxiv.roh.discord.bot.dodo.domain.read.azure.AzureTextReadService;
 import ffxiv.roh.discord.bot.dodo.domain.read.voicevox.VoiceVoxTextReadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 import static ffxiv.roh.discord.bot.dodo.domain.DirUtils.deleteOldCache;
+import static java.lang.Thread.sleep;
 
 @RequiredArgsConstructor
 @Service
@@ -21,10 +21,21 @@ public class TextReadService {
     private final VoiceVoxTextReadService voiceVoxTextReadService;
 
     public void read(User user, String text) throws Exception {
+        if (text.equals("__DO__DEBUG__VOICE__VOX")) {
+            for (Voice v : Arrays.stream(Voice.values()).filter(v -> v.getType() == Voice.Type.VOICE_VOX).toList()) {
+                read(user, v, "「%s」。こんにちは。".formatted(v.getNameJp()));
+                sleep(5000);
+            }
+        } else {
+            read(user, user.getVoice(), transformText(user, text));
+        }
         deleteOldCache();
-        switch (user.getVoice().getType()) {
-            case AZURE -> azureTextReadService.read(user.getVoice(), transformText(user, text));
-            case VOICE_VOX -> voiceVoxTextReadService.read(user.getVoice(), transformText(user, text));
+    }
+
+    private void read(User user, Voice voice, String text) throws Exception {
+        switch (voice.getType()) {
+            case AZURE -> azureTextReadService.read(voice, transformText(user, text));
+            case VOICE_VOX -> voiceVoxTextReadService.read(voice, transformText(user, text));
         }
     }
 
@@ -40,7 +51,7 @@ public class TextReadService {
 
         Config config = configRepository.findById(ConfigKey.readName.name()).orElseGet(() -> new Config(ConfigKey.readName.name(), "true"));
         if (config.getValue().equals("true")) {
-            return "%s：%s".formatted(user.getSpell(), result);
+            return user.getSpell() + "\n" + result;
         }
         return result;
     }
