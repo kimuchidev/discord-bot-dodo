@@ -13,13 +13,20 @@ public enum Voice {
     girl2(Type.AZURE, "ja-JP-AoiNeural", "女性-Aoi"),
     girl3(Type.AZURE, "ja-JP-MayuNeural", "女性-Mayu"),
     girl4(Type.AZURE, "ja-JP-ShioriNeural", "女性-Shiori"),
-    ZUNDAMON_AMAAMA(Type.VOICE_VOX, "1", "ずんだもん-あまあま"),
     ZUNDAMON_NORMAL(Type.VOICE_VOX, "3", "ずんだもん-ノーマル"),
-    ZUNDAMON_TSUNTSUN(Type.VOICE_VOX, "7", "ずんだもん-ツンツン"),
+    ZUNDAMON_AMAAMA(Type.VOICE_VOX, "1", "ずんだもん-あまあま"),
     ZUNDAMON_SASAYAKI(Type.VOICE_VOX, "22", "ずんだもん-ささやき"),
-    ZUNDAMON_HISOHISO(Type.VOICE_VOX, "38", "ずんだもん-ひそひそ"),
     ZUNDAMON_HEROHERO(Type.VOICE_VOX, "75", "ずんだもん-ヘロヘロ"),
-    ZUNDAMON_TEAR(Type.VOICE_VOX, "76", "ずんだもん-なみだめ");
+    METAN_NORMAL(Type.VOICE_VOX, "2", "四国めたん-ノーマル"),
+    METAN_AMAAMA(Type.VOICE_VOX, "0", "四国めたん-あまあま"),
+    METAN_SASAYAKI(Type.VOICE_VOX, "36", "四国めたん-ささやき"),
+    SORA_NORMAL(Type.VOICE_VOX, "16", "九州そら-ノーマル"),
+    SORA_AMAAMA(Type.VOICE_VOX, "15", "九州そら-あまあま"),
+    SORA_SASAYAKI(Type.VOICE_VOX, "19", "九州そら-ささやき"),
+    TSUMUGI_SASAYAKI(Type.VOICE_VOX, "8", "春日部つむぎ-ノーマル"),
+    HAU_SASAYAKI(Type.VOICE_VOX, "10", "雨晴はう-ノーマル"),
+    CUL_SASAYAKI(Type.VOICE_VOX, "23", "WhiteCUL-ノーマル"),
+    ;
 
     private final Type type;
     private final String code;
