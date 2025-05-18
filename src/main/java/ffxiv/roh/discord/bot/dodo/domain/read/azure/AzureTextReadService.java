@@ -7,6 +7,7 @@ import ffxiv.roh.discord.bot.dodo.domain.entity.Voice;
 import ffxiv.roh.discord.bot.dodo.domain.read.GuildMusicManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutionException;
@@ -20,6 +21,7 @@ public class AzureTextReadService {
     private final SpeechProperties speechProperties;
     private final GuildMusicManager musicManager;
 
+    @Async
     public void read(Voice voice, String text) {
         SpeechSynthesisOutputFormat format = SpeechSynthesisOutputFormat.Audio48Khz192KBitRateMonoMp3;
 

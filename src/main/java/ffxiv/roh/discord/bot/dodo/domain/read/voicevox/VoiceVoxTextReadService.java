@@ -9,6 +9,7 @@ import ffxiv.roh.discord.bot.dodo.domain.read.GuildMusicManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.retry.support.RetryTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -28,6 +29,7 @@ public class VoiceVoxTextReadService {
     private final VoiceVoxProperties voiceVoxProperties;
     private final GuildMusicManager musicManager;
 
+    @Async
     public void read(Voice voice, String text) throws Exception {
         requestSynthesis(voice, text);
     }
