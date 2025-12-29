@@ -39,3 +39,5 @@ out/
 ### local config ###
 /config/
 /cache/
+
+.env
